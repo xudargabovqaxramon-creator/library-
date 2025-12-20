@@ -12,11 +12,28 @@ try {
 }
 
 
+
+const search = async (req, res) => {
+try {
+    const  {name} = req.query
+    const searchingRes = await AuthorSchema.find({
+        full_name: {$regex:name}
+    })
+
+    res.status(200).json(searchingRes)
+} catch (error) {
+    console.log(error.message);
+    
+}
+}
+
+
+
 const add_author = async (req, res) => {
 try {
-    const {full_name,  birth_year, death_year, bio, creativty, image_url, region} = req.body
+    const {full_name,  birth_year, death_year, bio, creativty,genre, period, image_url, region} = req.body
 
-    await AuthorSchema.create({full_name,  birth_year, death_year, bio, creativty, image_url, region})
+    await AuthorSchema.create({full_name,  birth_year, death_year, bio, creativty,genre, period, image_url, region})
 
     res.status(201).json({
         message: "Added author"
@@ -51,7 +68,7 @@ try {
 const update_Author = async (req, res) => {
 try {
     const {id} = req.params
-     const {full_name,  birth_year, death_year, bio, creativty, image_url, region} = req.body
+     const {full_name,  birth_year, death_year, bio, creativty,genre, period, image_url, region} = req.body
     const author = await AuthorSchema.findById(id)
 
     if (!author) {
@@ -60,7 +77,7 @@ try {
         })
     }
     await AuthorSchema.findByIdAndUpdate(id,
-        {full_name,  birth_year, death_year, bio, creativty, image_url, region}
+        {full_name,  birth_year, death_year, bio, creativty,genre, period, image_url, region}
     )
 
     res.status(200).json({
@@ -104,5 +121,6 @@ module.exports = {
     add_author,
     get_one_Author,
     update_Author,
-    delet_author
+    delet_author,
+    search
 }

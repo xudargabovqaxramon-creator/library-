@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const connectDB = require("./config/db.config")
 const authorRouter = require("./router/author.routes")
+const bookRouter = require("./router/book.routes")
 require("dotenv").config()
 
 
@@ -16,6 +17,7 @@ connectDB()
 // Router
 
 l_app.use(authorRouter)
+l_app.use(bookRouter)
 
 l_app.listen(PORT , () => {
     console.log("server is running " +PORT);
