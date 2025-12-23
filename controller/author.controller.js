@@ -31,9 +31,9 @@ try {
 
 const add_author = async (req, res) => {
 try {
-    const {full_name,  birth_year, death_year, bio, creativty,genre, period, image_url, region} = req.body
+    const {full_name,  birth_year, death_year, bio, creativity,genre, period, image_url, region} = req.body
 
-    await AuthorSchema.create({full_name,  birth_year, death_year, bio, creativty,genre, period, image_url, region})
+    await AuthorSchema.create({full_name,  birth_year, death_year, bio, creativity,genre, period, image_url, region})
 
     res.status(201).json({
         message: "Added author"
@@ -68,7 +68,7 @@ try {
 const update_Author = async (req, res) => {
 try {
     const {id} = req.params
-     const {full_name,  birth_year, death_year, bio, creativty,genre, period, image_url, region} = req.body
+     const {full_name,  birth_year, death_year, bio, creativity,genre, period, image_url, region} = req.body
     const author = await AuthorSchema.findById(id)
 
     if (!author) {
@@ -77,7 +77,7 @@ try {
         })
     }
     await AuthorSchema.findByIdAndUpdate(id,
-        {full_name,  birth_year, death_year, bio, creativty,genre, period, image_url, region}
+        {full_name,  birth_year, death_year, bio, creativity,genre, period, image_url, region}
     )
 
     res.status(200).json({
