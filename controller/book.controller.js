@@ -2,7 +2,7 @@ const BookSchema = require("../schema/book.schema");
 
 const getAll_books = async (req, res) => {
 try {
-    const books = await BookSchema.find()
+    const books = await BookSchema.find().populate("author_id","_id")
 
     res.status(200).json(books)
 } catch (error) {
@@ -14,9 +14,9 @@ try {
 
 const add_book = async (req, res) => {
 try {
-    const {title,  pages, published_year, description, published_home,genre, period, image_url} = req.body
+    const {title,  pages, published_year, description, published_home,genre, period, image_url,author_id} = req.body
 
-    await BookSchema.create({title,  pages, published_year, description, published_home,genre, period, image_url})
+    await BookSchema.create({title,  pages, published_year, description, published_home,genre, period, image_url,author_id})
 
     res.status(201).json({
         message: "Added book "
@@ -51,7 +51,7 @@ try {
 const update_book = async (req, res) => {
 try {
     const {id} = req.params
-     const {title,  pages, published_year, description, published_home,genre, period, image_url} = req.body
+     const {title,  pages, published_year, description, published_home,author_id,genre, period, image_url} = req.body
     const book = await BookSchema.findById(id)
 
     if (!book) {
@@ -60,7 +60,7 @@ try {
         })
     }
     await BookSchema.findByIdAndUpdate(id,
-        {title,  pages, published_year, description, published_home,genre, period, image_url}
+        {title,  pages, published_year, description, published_home,genre,author_id, period, image_url}
     )
 
     res.status(200).json({

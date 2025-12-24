@@ -42,7 +42,7 @@ const Author = new Schema(
       type: String,
       required: true,
       maxlength: [600, "Faqat 600 ta harfga mumkin"],
-      minlength: [20, "Bio kamida 20 ta harfdan iborat bo'lsin"],
+      minlength: [10, "Bio kamida 10 ta harfdan iborat bo'lsin"],
     },
     genre: {
       type: String,
@@ -89,7 +89,7 @@ const Author = new Schema(
       type: String,
       required: true,
       maxlength: [400, "Faqat 400 ta harfga mumkin"],
-      minlength: [20, " kamida 20 ta harfdan iborat bo'lsin"],
+      minlength: [10, " kamida 10 ta harfdan iborat bo'lsin"],
     },
     region: {
       type: String,

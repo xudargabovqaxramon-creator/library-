@@ -1,3 +1,4 @@
+const { ref, required } = require("joi");
 const { Schema, model } = require("mongoose");
 
 const BookSchema = new Schema(
@@ -33,7 +34,7 @@ const BookSchema = new Schema(
     description: {
       type: String,
       required: [true, "description majburiy"],
-      minlength: [20, "description kamida 20 ta belgidan iborat bo'lsin"],
+      minlength: [10, "description kamida 10 ta belgidan iborat bo'lsin"],
       maxlength: [1000, "description 1000 belgidan oshmasin"],
     },
 
@@ -82,6 +83,11 @@ const BookSchema = new Schema(
       trim: true,
       minlength: [2, "Nashriyot nomi juda qisqa"],
     },
+    author_id : {
+        type: Schema.ObjectId,
+        ref:"Author",
+        required: true
+    }
   },
   {
     versionKey: false,
