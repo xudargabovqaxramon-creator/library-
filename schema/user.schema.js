@@ -6,7 +6,6 @@ const userschema = new Schema(
         type:String,
         required: [true, "Royxatdan o'tish uchun ism kiriting"],
         trim: true,
-        lowercase:true,
         unique:true
     },
      email: {
