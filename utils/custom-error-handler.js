@@ -1,0 +1,19 @@
+module.exports = class CustomErrorHandler extends Error {
+    constructor(status,message,  error){
+        super(message)
+        this.status= status
+        this.error = error
+    }
+
+    static UnAuthorized(message, error= []) {
+        return new CustomErrorHandler(401, message, error)
+    }
+
+    static BadRequest(message, error= []) {
+        return new CustomErrorHandler(401, message, error)
+    }
+
+    static NotFound(message, error= []) {
+        return new CustomErrorHandler(401, message,  error)
+    }
+}

@@ -1,18 +1,19 @@
 const BookSchema = require("../schema/book.schema");
+const CustomErrorHandler = require("../utils/custom-error-handler");
 
-const getAll_books = async (req, res) => {
+const getAll_books = async (req, res, next) => {
 try {
     const books = await BookSchema.find().populate("author_id","_id")
 
     res.status(200).json(books)
 } catch (error) {
-    console.log(error.message);
-    
+     next(error)
+  
 }
 }
 
 
-const add_book = async (req, res) => {
+const add_book = async (req, res, next) => {
 try {
     const {title,  pages, published_year, description, published_home,genre, period, image_url,author_id} = req.body
 
@@ -22,42 +23,38 @@ try {
         message: "Added book "
     })
 } catch (error) {
-    console.log(error.message);
+     next(error)
     
 }}
 
 
 
 
-const get_one_book = async (req, res) => {
+const get_one_book = async (req, res, next) => {
 try {
     const {id} = req.params
     const book = await BookSchema.findById(id)
 
     if (!book) {
-        return res.status(404).json({
-            message : "book not found"
-        })
+        throw CustomErrorHandler.NotFound("Book Not Found")
     }
 
     res.status(200).json(book)
 } catch (error) {
-    console.log(error.message);
+     next(error)
     
 }}
 
 
 
-const update_book = async (req, res) => {
+const update_book = async (req, res, next) => {
 try {
     const {id} = req.params
      const {title,  pages, published_year, description, published_home,author_id,genre, period, image_url} = req.body
     const book = await BookSchema.findById(id)
 
     if (!book) {
-        return res.status(404).json({
-            message : "book not found"
-        })
+         throw CustomErrorHandler.NotFound("Book Not Found")
     }
     await BookSchema.findByIdAndUpdate(id,
         {title,  pages, published_year, description, published_home,genre,author_id, period, image_url}
@@ -67,7 +64,7 @@ try {
         message : "book updated"
     })
 } catch (error) {
-    console.log(error.message);
+     next(error)
     
 }}
 
@@ -76,15 +73,13 @@ try {
 
 
 
-const  delet_book= async (req, res) => {
+const  delet_book= async (req, res, next) => {
 try {
     const {id} = req.params
     const book = await BookSchema.findById(id)
 
     if (!book) {
-        return res.status(404).json({
-            message : "book not found"
-        })
+        throw CustomErrorHandler.NotFound("Book Not Found")
     }
     await BookSchema.findByIdAndDelete(id)
 
@@ -92,7 +87,7 @@ try {
         message : "book deleted"
     })
 } catch (error) {
-    console.log(error.message);
+     next(error)
     
 }}
 

@@ -20,7 +20,7 @@ const Registr = async (req, res) => {
       message: "registered",
     });
   } catch (error) {
-    console.log(error.message);
+      next(error)
   }
 };
 
@@ -53,7 +53,7 @@ const Login = async (req, res) => {
     });
 
   } catch (error) {
-    console.log(error.message);
+      next(error)
   }
 };
 

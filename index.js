@@ -4,6 +4,7 @@ const connectDB = require("./config/db.config")
 const authorRouter = require("./router/author.routes")
 const bookRouter = require("./router/book.routes")
 const UsersRouter = require("./router/authorization.routes")
+const errorMiddleware = require("./middleware/error.middleware")
 require("dotenv").config()
 
 
@@ -20,7 +21,7 @@ connectDB()
 l_app.use(authorRouter)
 l_app.use(bookRouter)
 l_app.use(UsersRouter)
-
+l_app.use(errorMiddleware)
 
 l_app.listen(PORT , () => {
     console.log("server is running " +PORT);
