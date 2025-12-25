@@ -1,7 +1,7 @@
 const { ref, required } = require("joi");
 const { Schema, model } = require("mongoose");
 
-const BookSchema = new Schema(
+const Bookschema = new Schema(
   {
     title: {
       type: String,
@@ -95,4 +95,5 @@ const BookSchema = new Schema(
   }
 );
 
-module.exports = model("Book", BookSchema);
+const BookSchema= model("Book", Bookschema);
+module.exports = BookSchema

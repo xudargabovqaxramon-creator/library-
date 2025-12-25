@@ -1,4 +1,5 @@
 const AuthorSchema = require("../schema/author.schema");
+const bookSchema = require("../schema/book.schema");
 
 const getAllAuthors = async (req, res) => {
 try {
@@ -57,7 +58,9 @@ try {
         })
     }
 
-    res.status(200).json(author)
+    const foundedBooks = await bookSchema.find({author_id:id}).select("title pages -_id")
+
+    res.status(200).json({author, foundedBooks})
 } catch (error) {
     console.log(error.message);
     
