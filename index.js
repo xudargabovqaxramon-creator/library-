@@ -20,8 +20,6 @@ connectDB()
 l_app.use(authorRouter)
 l_app.use(bookRouter)
 l_app.use(UsersRouter)
-l_app.use("/images/author-img", express.static("uploads/images/author-img"));
-l_app.use("/images/books-img", express.static("uploads/images/books-img"));
 
 
 l_app.listen(PORT , () => {
