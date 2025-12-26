@@ -1,11 +1,11 @@
 const Joi = require("joi")
 
-exports.AuthorValidator = function(data) {
+exports.BookValidator = function(data) {
     try {
         const schema = Joi.object({
-            full_name: Joi.string.pattern(new RegExp('^[a-zA-Z{3,50}]')).required(),
-            birth_year: Joi.number.integer().required(),
-            death_year: Joi.string.required(),
+            title: Joi.string.pattern(new RegExp('^[a-zA-Z{2,150}]')).required(),
+            pages: Joi.number.min(10).integer().required(),
+            published_year: Joi.number.integer().max(new Date().getFullYear()).required(),
             image_url: Joi.string.min(15).required(),
             genre: Joi.string.lowercase().valid("historical",
           "drama",
@@ -25,13 +25,13 @@ exports.AuthorValidator = function(data) {
           "satire",
           "melodrama",
           "action",).required(),
-            bio: Joi.string.max(10000).required(),
+            description: Joi.string.max(10000).required(),
             period: Joi.string.valid("Temuriylar davri",
           "Jadid adabiyoti",
           "Sovet davri",
           "Mustaqillik davri",).required(),
-            creativity: Joi.string.max(1000).required(),
-            region: Joi.string.max(50).required()
+            published_home: Joi.string.min(3).max(100).required(),
+            author_id: Joi.string.max(24).required()
         })
         return schema.validate(data)
     } catch (error) {
