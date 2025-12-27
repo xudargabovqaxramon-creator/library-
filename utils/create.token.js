@@ -1,8 +1,13 @@
 const jwt = require("jsonwebtoken")
+const CustomErrorHandler = require("./custom-error-handler")
 
-const tokenGenerete = (payload) =>{
-    return jwt.sign(payload,process.env.SECRETKY,{expiresIn : "1d"})
+const accessToken = (payload) =>{
+   try {
+     return jwt.sign(payload,process.env.SECRETKY,{expiresIn : "15m"})
+   } catch (error) {
+    throw CustomErrorHandler.BadRequest(error.message)
+   }
 }
 
 
-module.exports = tokenGenerete
+module.exports = accessToken
