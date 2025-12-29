@@ -10,4 +10,16 @@ const accessToken = (payload) =>{
 }
 
 
-module.exports = accessToken
+
+const refreshToken = (payload) =>{
+   try {
+     return jwt.sign(payload,process.env.REFRESH_SECRET,{expiresIn : "15d"})
+   } catch (error) {
+    throw CustomErrorHandler.BadRequest(error.message)
+   }
+}
+
+module.exports = {
+  accessToken,
+  refreshToken
+}

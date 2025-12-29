@@ -16,4 +16,8 @@ module.exports = class CustomErrorHandler extends Error {
     static NotFound(message, error= []) {
         return new CustomErrorHandler(401, message,  error)
     }
+    
+    static Forbidden(message, error= []) {
+        return new CustomErrorHandler(403, message,  error)
+    }
 }
