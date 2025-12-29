@@ -61,8 +61,6 @@ const verify = async (req, res, next) => {
 
     await AuthSchema.findByIdAndUpdate(foundeduser._id, {
       isVerified: true,
-      otpTime: null,
-      otp: null,
     });
 
     const payload = {
@@ -75,11 +73,11 @@ const verify = async (req, res, next) => {
     const access_token = accessToken(payload);
     const refresh_token = refreshToken(payload);
 
-    res.cookie("access_token", accessToken, {
+    res.cookie("access_token", access_token, {
       httpOnly: true,
       maxAge: 100 * 60 * 15,
     });
-    res.cookie("refresh_token", refreshToken, {
+    res.cookie("refresh_token", refresh_token, {
       httpOnly: true,
       maxAge: 3600 * 1000 * 24 * 15,
     });
@@ -170,16 +168,39 @@ const Login = async (req, res, next) => {
     }
   } catch (error) {
     next(error);
-  }
-};
-
-
-
+  }};
 
 const logout = async (req, res, next) => {
   try {
-    res.clearCookie("access_token")
-     res.clearCookie("refresh_token")
+    res.clearCookie("access_token");
+    res.clearCookie("refresh_token");
+  } catch (error) {
+    next(error);
+  }};
+
+const forgotPassword = async (req, res, next) => {
+  try {
+    const { email, otp, new_password } = req.body;
+
+    const foundedUser = await AuthSchema.findOne({ email });
+
+    if (!foundedUser) {
+      throw CustomErrorHandler.UnAuthorized("User not found");
+    }
+
+    if (!foundedUser.isVerified) {
+      throw CustomErrorHandler.UnAuthorized("User was not verified");
+    }
+
+    const hashPassword = await bcrypt.hash(new_password, 12);
+
+    await AuthSchema.findByIdAndUpdate(foundedUser._id, {
+      password: hashPassword,
+    });
+
+    res.status(200).json({
+      message: "Password successfully updated",
+    });
   } catch (error) {
     next(error);
   }
@@ -187,7 +208,8 @@ const logout = async (req, res, next) => {
 
 module.exports = {
   register,
+  resendCode,
   Login,
   verify,
-  logout
+  logout,
 };

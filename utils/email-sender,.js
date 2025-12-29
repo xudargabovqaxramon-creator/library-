@@ -16,7 +16,7 @@ module.exports = async function(code, email) {
             to:email,
             subject: "Library verification",
             text: "Ushbu xabarda tasdiqlash kodi berilgan",
-            html: `<b>${code}</b>`
+            html: `<b style="color:blue; font-size:20px;">${code}</b>`
         })
     } catch (error) {
         throw CustomErrorHandler.BadRequest(error.message) 

@@ -7,6 +7,7 @@ const errorMiddleware = require("./middleware/error.middleware")
 const AuthRouter = require("./router/auth.routes")
 require("dotenv").config()
 const cookieparser= require("cookie-parser")
+const CitationRouter = require("./router/citation.routes")
 
 
 const l_app = express()
@@ -23,6 +24,7 @@ connectDB()
 l_app.use(authorRouter)
 l_app.use(bookRouter)
 l_app.use(AuthRouter)
+l_app.use(CitationRouter)
 
 
 l_app.use(errorMiddleware)
