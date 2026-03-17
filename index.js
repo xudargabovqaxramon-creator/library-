@@ -29,7 +29,7 @@ l_app.use(CitationRouter)
 
 l_app.use(errorMiddleware)
 
-l_app.listen(PORT , () => {
-    console.log("server is running " +PORT);
-    
-}) 
+const port = process.env.PORT || 10000;
+l_app.listen(port, '0.0.0.0', () => {
+  console.log(`Server is running on port ${port}`);
+});
